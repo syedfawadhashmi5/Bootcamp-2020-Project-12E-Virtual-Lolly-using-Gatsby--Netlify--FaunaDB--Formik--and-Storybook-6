@@ -1,0 +1,121 @@
+.container {
+    width: 1200px !important;
+}
+
+.container > * {
+    margin: 10px;
+
+}
+
+.contain_header {
+    text-align: center;
+}
+
+.contain_header > h1 {
+    font-size: 5em;
+    font-weight: 300;
+    font-family: ui-serif;
+    color: #fff;
+    border-bottom-style: none;
+    text-shadow: #d44eb3 0 0 8px;
+    cursor: pointer;
+    margin: 2px;
+}
+
+.contain_header > h1:hover {
+    font-size: 5em;
+    font-weight: 300;
+    color: #fff;
+    border-bottom-style: none;
+    text-shadow: #d44eb3 0 0 25px;
+}
+
+.contain_header > p {
+    font-size: 1em;
+    font-style: italic;
+    color: #ddd;
+    text-shadow: #fa73d9 1px 1px 4px;
+    margin-top: 1.5em;
+    margin-bottom: 3em;
+    line-height: 1.2;
+}
+
+.main_lolly_div  {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    height: 800px;
+    width: 100%;
+}
+
+.lolly_color_picker{
+    display: flex;
+    flex-direction: column;
+    justify-content: normal;
+    height: 24rem;
+}
+
+.lolly_color_picker > * {
+margin: 15px;
+}
+
+.colorPickerLabel {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 20px;
+    overflow: hidden;
+
+}
+
+.colorPickerLabel > input {
+    width: 80px;
+    height: 80px;
+    margin-top: -10px;
+    margin-left: -10px;
+    cursor: pointer;
+}
+
+.footer_div {
+    padding: 1em 2em;
+    margin-bottom: 1.5em;
+    background-color: rgba(0,0,0,.2);
+    box-shadow: 0 0 10px rgba(0,0,0,.6);
+    text-align: left;
+    font-style: italic;
+    font-size: 1.1em;
+    width: 25%;
+    height: 32rem;
+    margin: 0 70px
+}
+
+.from_color {
+    font-size: .9em;
+    width: 100%;
+    padding: .4em .2em;
+    margin: 0 -.2em;
+    border: 1px solid #fa73d9;
+    color: #fff !important;
+    background-color: #222;
+    box-shadow: 0 0 6px #fa73d9;
+}
+
+input {
+    color: #fff !important;
+
+}
+label { 
+    color: white !important;
+}
+
+textarea{
+    font-size: .9em;
+    width: 100%;
+    padding: .4em .2em;
+    margin: 0 -.2em;
+    border: 1px solid #fa73d9;
+    color: #fff !important;
+    background-color: #222;
+    box-shadow: 0 0 6px #fa73d9;
+    min-height: 180px;
+}

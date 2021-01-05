@@ -1,0 +1,96 @@
+const { ApolloServer, gql } = require("apollo-server-lambda");
+
+const dotenv = require("dotenv");
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+}
+dotenv.config();
+
+const shortId = require("shortid");
+
+var faunadb = require("faunadb"),
+  q = faunadb.query;
+
+const typeDefs = gql`
+  type Query {
+    giftlollies: [Lolly]
+    lollyByPath(lollyPath: String): Lolly
+  }
+  type Lolly {
+    recipient: String
+    message: String
+    sender: String
+    top: String
+    middle: String
+    bottom: String
+    lollyPath: ID!
+  }
+  type Mutation {
+    createLolly(
+      recipient: String
+      message: String
+      sender: String
+      top: String
+      middle: String
+      bottom: String
+      lollyPath: String
+    ): Lolly
+  }
+`;
+
+const resolvers = {
+  Query: {
+  giftlollies: async()=>{
+    var adminClient = new faunadb.Client({
+      secret: "fnAD-Pc9BcACB5qyODsTVmFMS-Gynn_NoxYxgr6a",
+    });
+    var result = await adminClient.query(
+      query.Map(
+        query.Paginate(query.Documents(query.Collection("lolly"))),
+        query.Lambda(x => query.Get(x))
+      )
+    )
+    const lollies=result.data.map(lolly=>lolly.data);
+    console.log("result",lollies);
+    // return "result"
+    return lollies;
+  },
+  lollyByPath:async(_,{lollyPath})=>{
+        var adminClient = new faunadb.Client({
+      secret: "fnAD-Pc9BcACB5qyODsTVmFMS-Gynn_NoxYxgr6a",
+    });
+    const result=await adminClient.query(
+          query.Get(query.Match(query.Index("lolly_by_path"),lollyPath))
+        )
+        return result.data;
+  }
+},
+  Mutation: {
+    createLolly: async (_, args) => {
+        var id = shortId.generate();
+        console.log("Lolly", args);
+        args.lollyPath = id;
+        var adminClient = new faunadb.Client({
+          secret: "fnAD-Pc9BcACB5qyODsTVmFMS-Gynn_NoxYxgr6a",
+        });
+        const result = await adminClient.query(
+          query.Create(query.Collection("lolly"), {
+            data: args,
+          })
+        );
+        console.log("result", result.data);
+
+        return result.data;
+
+    },
+  },
+};
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
+const handler = server.createHandler();
+
+module.exports = { handler };
